@@ -9,6 +9,7 @@ import com.danielepereira.bookstoremanager.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,7 @@ public class BookService {
         Book bookToSave = bookMapper.toModel(bookDTO);
 
         Book savedBook = bookRepository.save(bookToSave);
+
         return MessageReponseDTO.builder()
                 .message("Book created whith ID" + savedBook.getId())
                 .build();
@@ -38,6 +40,10 @@ public class BookService {
                  .orElseThrow(() -> new BookNotFoundException(id));
 
         return bookMapper.toDTO(book);
+    }
+
+    public List<Book> findAll() {
+        return bookRepository.findAll();
     }
 }
 
